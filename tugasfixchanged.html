@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let product = [
+        {
+          nama: "anggur",
+          price: 20000,
+          stok: 10,
+          sugarLevel: "medium ",
+          category: "fruit",
+        },
+        {
+          nama: "jeans",
+          price: 80000,
+          stok: 20,
+          size: "L",
+          category: "clothes",
+        },
+        {
+          nama: "iron",
+          price: 100000,
+          stok: 11,
+          warranty: true,
+          category: "electronic",
+        },
+        {
+          nama: "crabStick",
+          price: 20000,
+          stok: 25,
+          exp: 2029,
+          category: "frozenfood",
+        },
+      ];
+      class Toserba {
+        constructor(nama, price, stok) {
+          this.nama = nama;
+          this.price = price;
+          this.stok = stok;
+        }
+        editStok(qty, nama_product) {
+          let productIndex = product.findIndex((el) => {
+            return (el.nama = nama_product);
+          });
+          product = product[productIndex].stok - qty;
+          return product;
+          console.log(product);
+          //filter int
+        }
+      }
+
+      class Fruits extends Toserba {
+        constructor(nama, price, stok, sugar, category) {
+          super(nama, price, stok);
+          this.sugarLevel = sugar;
+          this.category = category;
+        }
+      }
+      class Cloth extends Toserba {
+        constructor(nama, price, stok, size, category) {
+          super(nama, price, stok);
+          this.size = size;
+          this.category = category;
+        }
+      }
+      class Elektronika extends Toserba {
+        constructor(nama, price, stok, warranty, category) {
+          super(nama, price, stok);
+          this.warranty = warranty;
+          this.category = category;
+        }
+      }
+      class Frozen extends Toserba {
+        constructor(nama, price, stok, exp, category) {
+          super(nama, price, stok);
+          this.exp = exp;
+          this.category = category;
+        }
+      }
+
+      let showList = () => {
+        let xx = `Berikut daftar barang di toserba kami \n`;
+        product.forEach((item, index) => {
+          let temp = `${index + 1}.`;
+          for (let prop in item) {
+            if (prop === "category") {
+              temp += `${item[prop]}.`;
+            } else {
+              temp += `${item[prop]},`;
+            }
+          }
+          xx += temp + "\n";
+        });
+
+        return xx;
+      };
+
+      list = showList();
+
+      let idCate = " ";
+      product.forEach((item, index) => {
+        idCate += `${index + 1}.`;
+
+        for (let prop = 0; prop <= 0; prop++) {
+          idCate += `${item.category}\n`;
+        }
+      });
+
+      let goodcart = () => {
+        let notice = " ";
+        product.forEach((item, index) => {
+          notice += `${index + 1}.`;
+
+          for (let prop = 0; prop <= 0; prop++) {
+            notice += `${item.nama} ${item.stok}\n`;
+          }
+        });
+        return notice;
+      };
+
+      let keranjang = []; // keranjang ini isinya adalah data object (array encapsulation)
+
+      let temp = " ";
+
+      while (true) {
+        let input =
+          +prompt(` Selamat datang di Budi Mart "toko buah Fresh", silahkan pilih menu di bawah ini:
+                1. Daftar Barang
+                2. Menambah Barang
+                3. Menghapus Barang
+                4. Membeli Barang
+                5. Exit`);
+
+        if (input === 1) {
+          let list = showList();
+          alert(list);
+        } else if (input === 2) {
+          while (true) {
+            let add_stuff = +prompt(
+              `barang apa yang ingin anda tambahkan?\n ${idCate}`
+            );
+            if (add_stuff === 1) {
+              let buah = prompt(`nama buah apa yang ingin anda tambahkan? `);
+              let price = +prompt(`berapa harga produk tersebut`);
+              let stock = +prompt(
+                `berapa banyak stok yang ingin anda tambahkan?`
+              );
+              let sugar = prompt(`level dari gulanya bagaimana?`);
+              let category = prompt(`termasuk kategori produk apa?`);
+              // habis itu databasenya ditaruh di product,cara yang efektif adalah:
+              // menaruh semua nilai ke dalam cetakan lalu diteruskan dalam product
+              let fruits = new Fruits(buah, price, stock, sugar, category);
+              console.log(fruits);
+              product.push(fruits);
+              console.log(product);
+              alert(`data buah berhasil ditambahkan`);
+              let konfirmasi = confirm(
+                `apakah anda ingin menambah barang lagi?`
+              );
+              if (!konfirmasi) break;
+            }
+            if (add_stuff === 2) {
+              let pakaian = prompt(`pakaian apa yang ingin anda tambahkan? `);
+              let price = +prompt(`berapa harga pakaian tersebut`);
+              let stock = +prompt(
+                `berapa banyak stok yang ingin anda tambahkan?`
+              );
+              let size = prompt(`apa ukuran pakaiannya? e.g. M/L/XL`);
+              let category = prompt(`termasuk kategori produk apa?`);
+              let cloth = new Cloth(pakaian, price, stock, size, category);
+              product.push(cloth);
+              alert(`data  pakaian berhasil ditambahkan`);
+              let konfirmasi = confirm(
+                `apakah anda ingin menambah barang lagi?`
+              );
+              if (!konfirmasi) break;
+            }
+            if (add_stuff === 3) {
+              let elektro = prompt(
+                `item elektronik apa yang ingin anda tambahkan? `
+              );
+              let price = +prompt(`berapa harga item elektronik tersebut`);
+              let stock = +prompt(
+                `berapa banyak stok yang ingin anda tambahkan?`
+              );
+              let garansi = prompt(`ada garansinya?`);
+              let category = prompt(`termasuk kategori produk apa?`);
+              let elektronika = new Elektronika(
+                elektro,
+                price,
+                stock,
+                garansi,
+                category
+              );
+              product.push(elektronika);
+              alert(`data item elektronik berhasil ditambahkan`);
+              let konfirmasi = confirm(
+                `apakah anda ingin menambah barang lagi?`
+              );
+              if (!konfirmasi) break;
+            }
+          }
+        } else if (input == 3) {
+          let hapus = +prompt(
+            `barang  yang mana yang ingin anda hapus? ${list}`
+          );
+          if ((hapus = 1)) {
+            product.splice(0, 1);
+          }
+          if ((hapus = 2)) {
+            product.splice(1, 1);
+          }
+          if ((hapus = 3)) {
+            product.splice(2, 1);
+          }
+          if ((hapus = 4)) {
+            product.splice(3, 1);
+          }
+          // kesimpulan dari semua yang telah dibetulkan, harus dirombak total dengan mengikuti prinsip semua yang
+          //ada dalam prompt harus masuk ke dalam cetakan
+          // setelah itu masuk ke dalam keranjang..silahkan dicoba
+        } else if (input == 4) {
+          while (true) {
+            let inputBarang = +prompt(
+              `barang nomer berapa yang ingin anda beli??${list}`
+            );
+
+            if (inputBarang == 1) {
+              let accessProp = product[inputBarang - 1];
+              let getNama = accessProp.nama;
+              let getPrice = accessProp.price;
+              console.log(getPrice);
+              let getStok = accessProp.stok;
+              let getCategory = accessProp.category;
+              let qty = +prompt(
+                `berapa banyak ${getNama} dengan stok ${getStok} yang ingin anda masukkan keranjang?`
+              );
+
+              let stokBaru = new Toserba(getNama, getPrice, qty);
+              console.log(stokBaru);
+              stokBaru.editStok(qty, getNama);
+              console.log(product);
+            }
+
+            //     if ((inputBarang = 2)) {
+            //       let qty = +prompt(
+            //         `berapa banyak ${getNama} dengan stok ${getStok} yang ingin anda masukkan keranjang?`
+            //       );
+
+            //       let stokBaru = new Cloth(getNama, getPrice, qty);
+            //       product = stokBaru.editStok(qty, getNama);
+
+            //       console.log(product);
+
+            //       let isiFruitCart = new Toserba(getNama, getPrice, qty);
+            //       keranjang.push(isiFruitCart);
+            //       console.log(keranjang);
+            //       // catatan berikutnya adalah ketika melakukan pemesanan pada dua barang yang sama, harus dibuatkan functionnya.
+            //     }
+            let konfirmasi = confirm(
+              `apakah anda ingin menambahkan buah lagi ke dalam keranjang`
+            );
+            if (!konfirmasi) {
+              break;
+            }
+          }
+        } else if (input == 5) {
+          break;
+        }
+      }
+    </script>
+  </body>
+</html>
